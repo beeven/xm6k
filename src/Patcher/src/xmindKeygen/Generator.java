@@ -45,7 +45,7 @@ public class Generator {
         return Base64.encode(sequence.getEncoded());
     }
 
-    public String getPublicKeySrcForInject() throws IOException {
+    public String getPublicKeyCode() throws IOException {
         byte[] key = getPublicKeyInBase64OfASN1();
         StringBuilder builder = new StringBuilder("{");
         for(byte b : key) {

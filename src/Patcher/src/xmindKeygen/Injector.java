@@ -1,9 +1,8 @@
 package xmindKeygen;
 
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtMethod;
-import javassist.NotFoundException;
+import javassist.*;
+
+import java.io.IOException;
 
 /**
  * Created by Beeven on 11/4/14.
@@ -16,10 +15,36 @@ public class Injector {
         generator = new Generator();
     }
 
+    public void injectAll() throws Exception {
+        injectPublicKey();
+        injectStartup();
+        injectMeggy();
+    }
 
-    public void injectPublicKey() throws NotFoundException {
+
+    public void injectPublicKey() throws NotFoundException, IOException, CannotCompileException {
         ClassPool cp = ClassPool.getDefault();
         CtClass cc = cp.getCtClass("net.xmind.verify.internal.LicenseVerifier$VerificationJob");
         CtMethod cm = cc.getDeclaredMethod("getCommonVerifierParameters");
+        String publicKeyCode = generator.getPublicKeyCode();
+        cm.setBody("{ return new Object[] {\"Ae;\\t&2}w#n`If5!nu6#{!hBA1IMDx%\\n\", new byte[] " + publicKeyCode + "}; }");
+        cc.writeFile("../../build/");
     }
+
+    public void injectStartup() throws Exception {
+        ClassPool cp = ClassPool.getDefault();
+        CtClass cc = cp.getCtClass("net.xmind.verify.ui.internal.StartupVerifier");
+        CtMethod method = cc.getDeclaredMethod("verify");
+        method.setBody("{}");
+        cc.writeFile("../../build/");
+    }
+
+    public void injectMeggy() throws Exception {
+        ClassPool cp = ClassPool.getDefault();
+        CtClass cc = cp.getCtClass("org.xmind.ui.internal.meggy.PluginGuardian");
+        CtMethod method = cc.getDeclaredMethod("checkPluginsSignatureAgainst");
+        method.setBody("{ return true;}");
+        cc.writeFile("../../build/");
+    }
+
 }
