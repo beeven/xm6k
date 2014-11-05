@@ -16,6 +16,10 @@ import org.bouncycastle.util.encoders.Base64;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.security.KeyFactory;
+import java.security.PublicKey;
+import java.security.spec.RSAPublicKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 
 /**
  * Created by Beeven on 11/4/14.
@@ -37,7 +41,8 @@ public class Generator {
             "WF2Be4VpExuD53dxiEyMbLOJ1aLaKzycXa1DB7Cp0Q==\n" +
             "-----END RSA PRIVATE KEY-----";
 
-    public byte[] getPublicKeyInBase64OfASN1() throws IOException {
+
+    public byte[] getPublicKeyInX509Encoded() throws Exception {
         PEMParser parser = new PEMParser(new StringReader(privateKeyString));
         PEMKeyPair keyPair = (PEMKeyPair)parser.readObject();
         SubjectPublicKeyInfo publicKeyInfo = keyPair.getPublicKeyInfo();
@@ -45,8 +50,8 @@ public class Generator {
         return Base64.encode(sequence.getEncoded());
     }
 
-    public String getPublicKeyCode() throws IOException {
-        byte[] key = getPublicKeyInBase64OfASN1();
+    public String getPublicKeyCode() throws Exception {
+        byte[] key = getPublicKeyInX509Encoded();
         StringBuilder builder = new StringBuilder("{");
         for(byte b : key) {
             builder.append(Byte.toString(b)+",");
@@ -55,4 +60,8 @@ public class Generator {
         return builder.toString();
     }
 
+    public static void main(String[] args) throws Exception{
+        Generator g = new Generator();
+        System.out.println(g.getPublicKeyCode());
+    }
 }

@@ -22,7 +22,7 @@ public class Injector {
     }
 
 
-    public void injectPublicKey() throws NotFoundException, IOException, CannotCompileException {
+    public void injectPublicKey() throws Exception {
         ClassPool cp = ClassPool.getDefault();
         CtClass cc = cp.getCtClass("net.xmind.verify.internal.LicenseVerifier$VerificationJob");
         CtMethod cm = cc.getDeclaredMethod("getCommonVerifierParameters");

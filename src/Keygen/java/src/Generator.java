@@ -1,13 +1,22 @@
+import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.asn1.pkcs.RSAPrivateKey;
+import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.crypto.digests.MD5Digest;
 import org.bouncycastle.crypto.engines.RSAEngine;
 import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
 import org.bouncycastle.crypto.signers.PSSSigner;
 import org.bouncycastle.openssl.PEMKeyPair;
 import org.bouncycastle.openssl.PEMParser;
+import org.bouncycastle.util.encoders.Base64;
 
 import java.io.StringReader;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.security.spec.RSAPrivateKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Scanner;
 
 /**
@@ -40,19 +49,14 @@ public class Generator {
         PEMKeyPair pemKeyPair = (PEMKeyPair) keyPair;
         PrivateKeyInfo privateKeyInfo = pemKeyPair.getPrivateKeyInfo();
         RSAPrivateKey privateKey = RSAPrivateKey.getInstance(privateKeyInfo.parsePrivateKey());
-        RSAPrivateCrtKeyParameters kparam = new RSAPrivateCrtKeyParameters(privateKey.getModulus(),
-                privateKey.getPublicExponent(),
-                privateKey.getPrivateExponent(),
-                privateKey.getPrime1(),
-                privateKey.getPrime2(),
-                privateKey.getExponent1(),
-                privateKey.getExponent2(),
-                privateKey.getCoefficient());
+        RSAPrivateKeySpec keySpec = new RSAPrivateKeySpec(privateKey.getModulus(),privateKey.getPrivateExponent());
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        PrivateKey pk = kf.generatePrivate(keySpec);
 
-        PSSSigner signer = new PSSSigner(new RSAEngine(), new MD5Digest(), 32);
-        signer.init(true, kparam);
-        signer.update(bytesToSign, 0, bytesToSign.length);
-        return signer.generateSignature();
+        Signature signer = Signature.getInstance("SHA256withRSA");
+        signer.initSign(pk);
+        signer.update(bytesToSign);
+        return signer.sign();
     }
     public static String generateLicenseKey(String licenseEmail)
             throws Exception {
@@ -75,11 +79,41 @@ public class Generator {
         return first20 + signatureString;
     }
 
+    public byte[] getPublicKeyInX509Encoded() throws Exception {
+        PEMParser parser = new PEMParser(new StringReader(privateKeyString));
+        PEMKeyPair keyPair = (PEMKeyPair)parser.readObject();
+        SubjectPublicKeyInfo publicKeyInfo = keyPair.getPublicKeyInfo();
+        ASN1Sequence sequence = ASN1Sequence.getInstance(publicKeyInfo);
+        return Base64.encode(sequence.getEncoded());
+    }
+
+    public  boolean verifySignature(byte[] bytesToSign, byte[] signature, byte[] base64pk) throws Exception {
+        X509EncodedKeySpec localX509EncodedKeySpec = new X509EncodedKeySpec(Base64.decode(base64pk));
+        KeyFactory localKeyFactory = KeyFactory.getInstance("RSA");
+        PublicKey localPublicKey = localKeyFactory.generatePublic(localX509EncodedKeySpec);
+        Signature localSignature = Signature.getInstance("SHA256withRSA");
+        localSignature.initVerify(localPublicKey);
+        localSignature.update(bytesToSign);
+        return localSignature.verify(signature);
+    }
+
+    public  boolean verify() throws Exception{
+        String contentToSign = "abcdefg";
+        byte[] bytesToSign = contentToSign.getBytes();
+        byte[] signature = sign(bytesToSign);
+        byte[] publicKey = getPublicKeyInX509Encoded();
+        return verifySignature(bytesToSign,signature,publicKey);
+    }
+
     public static void main(String[] args) throws Exception {
+//        Generator g = new Generator();
+//        System.out.println(g.verify());
+
         System.out.print("Enter email: ");
         Scanner in = new Scanner(System.in);
         String email = in.nextLine();
         String license = generateLicenseKey(email);
+        System.out.println(license.length());
         System.out.println("License: ");
         System.out.println("---BEGIN LICENSE KEY---");
         System.out.println(license);

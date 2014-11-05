@@ -32,7 +32,7 @@ public class Base32
             bitsLeft -= 5;
             result.append(base32Chars.charAt(index));
         }
-        result.append('\000');
+        //result.append('\000');
         return result.toString();
     }
 
