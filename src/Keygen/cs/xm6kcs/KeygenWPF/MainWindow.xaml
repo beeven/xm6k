@@ -1,0 +1,23 @@
+﻿<Window x:Class="KeygenWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="XMind6 Keygen" Height="250" Width="525" WindowStyle="ToolWindow">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        
+        <Label Content="Email:" Grid.Row="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Grid.Column="0"/>
+        <TextBox Name="tbInput" Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" TextWrapping="Wrap" Text="hello@haha.com"/>
+        <Button Content="1.Patch" Grid.Column="2" Click="PatchButton_Click" Background="#FFECE8E8"></Button>
+        <Button Content="2.Generate" Grid.Column="3" Click="GenerateButton_Click" Background="#FFECE8E8"></Button>
+        <TextBox Grid.Row="1" Grid.ColumnSpan="4" Name="tbOutput" TextWrapping="Wrap" IsReadOnly="True" Margin="5 5 5 5" FontSize="14" ></TextBox>
+    </Grid>
+</Window>
