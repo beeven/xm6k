@@ -28,11 +28,10 @@ namespace KeygenWPF
 
         private void PatchButton_Click(object sender, RoutedEventArgs e)
         {
-            if (tbInput.Text.Length > 0)
+            Console.WriteLine("Hello");
+            foreach(var rkey in App.Current.Resources.Keys)
             {
-                String licenseKey = generator.generateLicenseKey(tbInput.Text);
-                tbOutput.Text = "---BEGIN LICENSE KEY---\n" + licenseKey + "\n---END LICENSE KEY---";
-                Clipboard.SetText(tbOutput.Text);
+                tbOutput.AppendText(rkey + "\n");
             }
         }
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
