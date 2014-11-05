@@ -28,11 +28,9 @@ namespace KeygenWPF
 
         private void PatchButton_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Hello");
-            foreach(var rkey in App.Current.Resources.Keys)
-            {
-                tbOutput.AppendText(rkey + "\n");
-            }
+            Injector injector = new Injector();
+            injector.inject(injector.findPathFromRegistory());
+            tbOutput.Text = "已打补丁，请输入Email，然后点击Generate生成序列号。";
         }
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
