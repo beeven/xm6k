@@ -1,0 +1,15 @@
+{
+  "name":"XMind6Keygen",
+  "description": "",
+  "main": "index.html",
+  "version": "0.0.1",
+  "window": {
+    "toolbar": false,
+    "resizable":false,
+    "position": "center",
+    "width": 560,
+    "height": 200,
+    "min_width": 530,
+    "min_height": 200
+  }
+}

@@ -32,11 +32,11 @@ public class Injector {
     }
 
     public void injectStartup() throws Exception {
-        ClassPool cp = ClassPool.getDefault();
-        CtClass cc = cp.getCtClass("net.xmind.verify.ui.internal.StartupVerifier");
-        CtMethod method = cc.getDeclaredMethod("verify");
-        method.setBody("{}");
-        cc.writeFile(".");
+        // ClassPool cp = ClassPool.getDefault();
+        // CtClass cc = cp.getCtClass("net.xmind.verify.ui.internal.StartupVerifier");
+        // CtMethod method = cc.getDeclaredMethod("verify");
+        // method.setBody("{}");
+        // cc.writeFile(".");
     }
 
     public void injectMeggy() throws Exception {
