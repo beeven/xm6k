@@ -14,14 +14,14 @@ if (isLinux32)
 if (isLinux64)
     os = "linux64";
 
-var nwVer = '0.8.6';
+var nwVer = '0.10.5';
 
 var nwExec = "";
 
 if (!isMac)
-    nwExec = "cd cache/" + os + "/" + nwVer + " && nw ../../../src";
+    nwExec = "cd cache/" + nwVer + "/" + os + " && nw ../../../src";
 else
-    nwExec = "cd cache/" + os + "/" + nwVer + " && open -n -a node-webkit ../../../src";
+    nwExec = "cd cache/" + nwVer + "/" + os + " && open -n -a node-webkit ../../../src";
 
 
 console.log("OS: " + os);
