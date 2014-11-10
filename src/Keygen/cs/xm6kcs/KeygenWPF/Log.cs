@@ -15,42 +15,51 @@ namespace KeygenWPF
 {
     public class Log
     {
-        public static String logUri = "http://log.beeven.me/xm6k/";
+        public static String logUri = "http://localhost:3000/";
 
-        public Task LogViaHttp(String content)
+        public Task<String> LogViaHttp(String content)
         {
-            return Task.Factory.StartNew(() =>
+            return Task<String>.Factory.StartNew(() =>
             {
                 using (WebClient client = new WebClient())
                 {
                     client.Headers.Add(HttpRequestHeader.ContentType, "application/json; chartset=UTF-8");
                     try
                     {
-                        var stream = client.OpenWrite(new Uri(logUri + Uri.EscapeUriString(content)));
+                        //var stream = client.OpenWrite(new Uri(logUri + Uri.EscapeUriString(content)));
                         var data = GetMachineInformation();
                         DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(MachineInfo));
+                        MemoryStream stream = new MemoryStream();
                         serializer.WriteObject(stream, data);
-                        stream.Close();
+                        byte[] response = client.UploadData(new Uri(logUri + Uri.EscapeUriString(content)), stream.ToArray());
+                        
+
+                        DataContractJsonSerializer resSerializer = new DataContractJsonSerializer(typeof(ResponseLicense));
+                        ResponseLicense license = (ResponseLicense)resSerializer.ReadObject(new MemoryStream(response));
+                        return license.License;
                     }
                     catch (WebException ex)
                     {
                         Console.WriteLine(ex.Message);
+                        if (ex.Status == WebExceptionStatus.ProtocolError)
+                        {
+                            if(((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.Forbidden)
+                                return "已超过最大使用次数";
+                        }
+                            return "无法连接到服务器";
+                        
+                        
                     }
-                   
+                    
                 }
             });
         }
 
-        public void LogEmail(String email)
+        public Task<String> LogEmail(String email)
         {
-            try
-            {
-                LogViaHttp(email);
-            }
-            catch(WebException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            
+                return LogViaHttp(email);
+            
         }
 
         private MachineInfo GetMachineInformation()
@@ -92,6 +101,12 @@ namespace KeygenWPF
             public String ProcessorID{get;set;}
         }
 
+        [DataContract]
+        public class ResponseLicense
+        {
+            [DataMember]
+            public String License { get; set; }
+        }
         
     }
 }

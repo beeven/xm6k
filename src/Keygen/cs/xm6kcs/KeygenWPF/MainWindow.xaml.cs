@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -35,13 +36,26 @@ namespace KeygenWPF
         }
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
+            var context = TaskScheduler.FromCurrentSynchronizationContext();
             if (tbInput.Text.Length > 0)
             {
-                logger.LogEmail(tbInput.Text);
-                String licenseKey = generator.generateLicenseKey(tbInput.Text);
-                tbOutput.Text = "---BEGIN LICENSE KEY---\r\n" + licenseKey + "\r\n---END LICENSE KEY---";
-                Clipboard.SetText(tbOutput.Text);
-                tbOutput.AppendText("\r\n\r\n以上序列号已复制到剪贴板，请打开xmind->帮助->序列号->输入序列号，填入上面的Email地址和Ctrl+V粘贴序列号即可。");
+                tbOutput.Text = "正在连接服务器";
+                var ret = logger.LogEmail(tbInput.Text);
+                ret.ContinueWith((x)=>
+                {
+                    if (x.IsCompleted)
+                    {
+                        tbOutput.Text = x.Result;
+                    }
+                    else
+                    {
+                        String licenseKey = generator.generateLicenseKey(tbInput.Text);
+                        tbOutput.Text = "---BEGIN LICENSE KEY---\r\n" + licenseKey + "\r\n---END LICENSE KEY---";
+                    }
+                    Clipboard.SetText(tbOutput.Text);
+                    tbOutput.AppendText("\r\n\r\n以上序列号已复制到剪贴板，请打开xmind->帮助->序列号->输入序列号，填入上面的Email地址和Ctrl+V粘贴序列号即可。");
+                },context);
+                
             }
         }
 
