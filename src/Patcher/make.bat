@@ -8,6 +8,6 @@ cd build
 java -classpath "../../../lib/*;../../../bak/*;." xmindKeygen.Main
 
 
-jar -uf net.xmind.verify_3.5.0.201410310637.jar net/
-jar -uf org.xmind.meggy_3.5.0.201410310637.jar org/
+jar -uf net.xmind.verify_3.5.1.201411201906.jar net/
+jar -uf org.xmind.meggy_3.5.1.201411201906.jar org/
 cd ..
