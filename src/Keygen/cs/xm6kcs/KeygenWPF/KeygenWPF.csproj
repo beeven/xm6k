@@ -1196,7 +1196,6 @@
     <Compile Include="bc\x509\X509V2AttributeCertificateGenerator.cs" />
     <Compile Include="bc\x509\X509V2CRLGenerator.cs" />
     <Compile Include="bc\x509\X509V3CertificateGenerator.cs" />
-    <Compile Include="Blocker.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Injector.cs" />
     <Compile Include="Log.cs" />
@@ -1257,6 +1256,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\org.xmind.meggy_3.5.0.201410310637.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\net.xmind.verify_3.5.1.201411201906.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\org.xmind.meggy_3.5.1.201411201906.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\net.xmind.verify_3.4.1.201401221918.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\org.xmind.meggy_3.4.1.201401221918.jar" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

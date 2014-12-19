@@ -31,7 +31,13 @@ namespace KeygenWPF
         private void PatchButton_Click(object sender, RoutedEventArgs e)
         {
             Injector injector = new Injector();
-            injector.inject(injector.findPathFromRegistory());
+            if (cbVersion.SelectedIndex <= 0)
+            {
+                injector.Inject();
+            } else
+            {
+                injector.Inject((String)((ComboBoxItem)cbVersion.SelectedItem).Content);
+            }
             tbOutput.Text = "已打补丁，请输入Email，然后点击Generate生成序列号。";
         }
         private void GenerateButton_Click(object sender, RoutedEventArgs e)

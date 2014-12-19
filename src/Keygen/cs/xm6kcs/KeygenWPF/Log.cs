@@ -47,8 +47,6 @@ namespace KeygenWPF
                                 return "已超过最大使用次数";
                         }
                             return "无法连接到服务器";
-                        
-                        
                     }
                     
                 }

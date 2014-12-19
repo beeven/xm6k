@@ -63,6 +63,16 @@ namespace KeygenWPF.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] net_xmind_verify_3_4_1_201401221918 {
+            get {
+                object obj = ResourceManager.GetObject("net_xmind_verify_3_4_1_201401221918", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] net_xmind_verify_3_5_0_201410310637 {
             get {
                 object obj = ResourceManager.GetObject("net_xmind_verify_3_5_0_201410310637", resourceCulture);
@@ -73,9 +83,39 @@ namespace KeygenWPF.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] net_xmind_verify_3_5_1_201411201906 {
+            get {
+                object obj = ResourceManager.GetObject("net_xmind_verify_3_5_1_201411201906", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] org_xmind_meggy_3_4_1_201401221918 {
+            get {
+                object obj = ResourceManager.GetObject("org_xmind_meggy_3_4_1_201401221918", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] org_xmind_meggy_3_5_0_201410310637 {
             get {
                 object obj = ResourceManager.GetObject("org_xmind_meggy_3_5_0_201410310637", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] org_xmind_meggy_3_5_1_201411201906 {
+            get {
+                object obj = ResourceManager.GetObject("org_xmind_meggy_3_5_1_201411201906", resourceCulture);
                 return ((byte[])(obj));
             }
         }

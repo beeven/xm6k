@@ -118,10 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="net_xmind_verify_3_4_1_201401221918" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\net.xmind.verify_3.4.1.201401221918.jar;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="net_xmind_verify_3_5_0_201410310637" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\net.xmind.verify_3.5.0.201410310637.jar;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="net_xmind_verify_3_5_1_201411201906" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\net.xmind.verify_3.5.1.201411201906.jar;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="org_xmind_meggy_3_4_1_201401221918" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\org.xmind.meggy_3.4.1.201401221918.jar;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="org_xmind_meggy_3_5_0_201410310637" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\org.xmind.meggy_3.5.0.201410310637.jar;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="org_xmind_meggy_3_5_1_201411201906" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\org.xmind.meggy_3.5.1.201411201906.jar;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
