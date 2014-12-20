@@ -16,6 +16,7 @@ exports.log = function(data){
                 db.collection("blacklist").update({"processorID": data.info.CPU[0].ProcessorID},
                     {$inc: {count: 1}},
                     {upsert: true},function(err,result){
+                        if(err) {deferred.reject(err);}
                         db.close();
                     });
             }
@@ -24,15 +25,6 @@ exports.log = function(data){
     return deferred.promise;
 };
 
-exports.updateBlacklist = function(){
-    var deferred = Q.defer();
-    MongoClient.connect("mongodb://localhost:27017/xm6k",{native_parser:true},function(err,db){
-        db.collection("logs").aggregate([
-                {}
-            ]);
-    });
-    return deferred.promise;
-};
 
 exports.checkBlacklist = function(postData){
     var processorID = "";
@@ -46,8 +38,8 @@ exports.checkBlacklist = function(postData){
     MongoClient.connect("mongodb://localhost:27017/xm6k",{native_parser:true},function(err,db){
         db.collection("blacklist").findOne({"processorID":processorID},function(err,result){
             if(err){ deferred.reject(err);db.close();return;}
-
-            if(result.count > 10) {
+            console.log("check result from db:",result);
+            if(result && result.count > 10) {
                 deferred.resolve(false);
             } else {
                 deferred.resolve(true);

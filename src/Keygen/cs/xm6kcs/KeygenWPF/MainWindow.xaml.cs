@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace KeygenWPF
 {
@@ -22,6 +23,10 @@ namespace KeygenWPF
     {
         Generator generator = new Generator();
         Log logger = new Log();
+
+        bool shiftKeyDown = false;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -34,7 +39,8 @@ namespace KeygenWPF
             if (cbVersion.SelectedIndex <= 0)
             {
                 injector.Inject();
-            } else
+            }
+            else
             {
                 injector.Inject((String)((ComboBoxItem)cbVersion.SelectedItem).Content);
             }
@@ -42,26 +48,87 @@ namespace KeygenWPF
         }
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.DoWork += bw_DoWork;
+            bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+
             var context = TaskScheduler.FromCurrentSynchronizationContext();
+
             if (tbInput.Text.Length > 0)
             {
-                tbOutput.Text = "正在连接服务器";
-                var ret = logger.LogEmail(tbInput.Text);
-                ret.ContinueWith((x)=>
+                tbOutput.Text = "正在努力计算中...";
+                if (shiftKeyDown == false)
                 {
-                    //if (x.IsCompleted)
-                    //{
-                    //    tbOutput.Text = x.Result;
-                    //}
-                    //else
-                    //{
-                        String licenseKey = generator.generateLicenseKey(tbInput.Text);
-                        tbOutput.Text = "---BEGIN LICENSE KEY---\r\n" + licenseKey + "\r\n---END LICENSE KEY---";
-                    //}
+                    bw.RunWorkerAsync(tbInput.Text);
+                }
+                else
+                {
+                    String licenseKey = generator.generateLicenseKey(tbInput.Text);
+                    tbOutput.Text = "---BEGIN LICENSE KEY---\r\n" + licenseKey + "\r\n---END LICENSE KEY---";
                     Clipboard.SetText(tbOutput.Text);
                     tbOutput.AppendText("\r\n\r\n以上序列号已复制到剪贴板，请打开xmind->帮助->序列号->输入序列号，填入上面的Email地址和Ctrl+V粘贴序列号即可。");
-                },context);
-                
+                }
+            }
+        }
+
+        void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+            if (e.Result is ConnectionExeption)
+            {
+                tbOutput.Text = "无法连接到服务器";
+            }
+            else if (e.Result is MaximumUsageException)
+            {
+                tbOutput.Text = "已超出最大使用次数";
+            }
+            else
+            {
+                tbOutput.Text = e.Result as String;
+                Clipboard.SetText(tbOutput.Text);
+                tbOutput.AppendText("\r\n\r\n以上序列号已复制到剪贴板，请打开xmind->帮助->序列号->输入序列号，填入上面的Email地址和Ctrl+V粘贴序列号即可。");
+            }
+        }
+
+        void bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var ret = logger.LogEmail((string)e.Argument);
+            try
+            {
+                ret.Wait();
+                e.Result = ret.Result;
+            }
+            catch (AggregateException ae)
+            {
+                ae.Handle((x) =>
+                {
+                    if (x is ConnectionExeption || x is MaximumUsageException)
+                    {
+                        e.Result = x;
+                        return true;
+                    }
+                    else
+                    {
+                        e.Result = x;
+                        return false;
+                    }
+                });
+            }
+        }
+
+        private void Button_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
+            {
+                this.shiftKeyDown = true;
+            }
+        }
+
+        private void Button_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
+            {
+                this.shiftKeyDown = false;
             }
         }
 

@@ -43,10 +43,10 @@ namespace KeygenWPF
                         Console.WriteLine(ex.Message);
                         if (ex.Status == WebExceptionStatus.ProtocolError)
                         {
-                            if(((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.Forbidden)
-                                return "已超过最大使用次数";
+                            if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.Forbidden)
+                                throw new MaximumUsageException("已超出最大使用次数",ex);
                         }
-                            return "无法连接到服务器";
+                        throw new ConnectionExeption("无法连接到服务器",ex);
                     }
                     
                 }

@@ -1196,6 +1196,7 @@
     <Compile Include="bc\x509\X509V2AttributeCertificateGenerator.cs" />
     <Compile Include="bc\x509\X509V2CRLGenerator.cs" />
     <Compile Include="bc\x509\X509V3CertificateGenerator.cs" />
+    <Compile Include="Exceptions.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Injector.cs" />
     <Compile Include="Log.cs" />
