@@ -25,7 +25,8 @@ exports.generateLicense = function generateLicense(email) {
   var signer = crypt.createSign("RSA-SHA256");
   signer.update(keyBase);
   var signature = signer.sign(privateKeyString);
-  var license = b32.encodeSync(signature);
+  var license = b32.encodeSync(signature).toString();
   return "---BEGIN LICENSE KEY---\n"
-      +first20+ license + "\n---END LICENSE KEY---";
+      + first20 + license  + "\n"
+      + "---END LICENSE KEY---";
 };
