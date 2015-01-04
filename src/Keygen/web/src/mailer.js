@@ -7,7 +7,7 @@ var transporter = nodemailer.createTransport({
     service: "Hotmail",
     auth: {
         user: "beeven@hotmail.com",
-        pass: "5001nssi!"
+        pass: "qwer*1234"
     }
 });
 
