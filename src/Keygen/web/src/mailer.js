@@ -6,8 +6,13 @@ var nodemailer = require("nodemailer"),
 var transporter = nodemailer.createTransport({
     service: "QQ",
     auth: {
+<<<<<<< HEAD
         user: "",
         pass: ""
+=======
+        user: "beeven@hotmail.com",
+        pass: "qwer*1234"
+>>>>>>> 13415ad08588c98020df4c988154321ec98d966c
     }
 });
 
