@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>xm6k</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <style>
+        html,body {
+            height: 100%;
+        }
+        .container {
+            display: -webkit-flex;
+            display: flex;
+            height: 100%;
+        }
+        .row {
+            margin:auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <form action="/sendmail" method="POST" class="form">
+                <div class="input-group">
+                    <input type="email" name="mailaddr" id="mailaddr" placeholder="Enter email" class="form-control"/>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default">Send</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

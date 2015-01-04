@@ -15,9 +15,9 @@ namespace KeygenWPF
 {
     public class Log
     {
-        public static String logUri = "http://localhost:3000/";
+        public static String logUri = "http://beevenubuntu.cloudapp.net/xm6k/log/";
 
-        public Task<String> LogViaHttp(String content)
+        public Task<String> LogViaHttp(String mailAddress)
         {
             return Task<String>.Factory.StartNew(() =>
             {
@@ -31,7 +31,7 @@ namespace KeygenWPF
                         DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(MachineInfo));
                         MemoryStream stream = new MemoryStream();
                         serializer.WriteObject(stream, data);
-                        byte[] response = client.UploadData(new Uri(logUri + Uri.EscapeUriString(content)), stream.ToArray());
+                        byte[] response = client.UploadData(new Uri(logUri + Uri.EscapeUriString(mailAddress)), stream.ToArray());
                         
 
                         DataContractJsonSerializer resSerializer = new DataContractJsonSerializer(typeof(ResponseLicense));

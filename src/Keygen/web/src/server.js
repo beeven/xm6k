@@ -6,9 +6,11 @@ var generator = require("./generator"),
     dataProvider = require("./dataProvider");
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended:false }));
+app.use(bodyParser.urlencoded({ extended:true}));
 
-app.post("/:email",function(req,res){
+app.use(express.static(__dirname + "/public"));
+
+app.post("/log/:email",function(req,res){
     var email = req.params.email;
     var data = {
         email: email,
@@ -28,6 +30,14 @@ app.post("/:email",function(req,res){
             res.status(403).end();
         }
     });
+
+});
+
+app.post("/sendmail",function(req,res){
+    console.log(req.body);
+    var email = req.param('mailaddr');
+    console.log(email);
+    res.send("Mail sent");
 });
 
 app.get("/",function(req,res){
