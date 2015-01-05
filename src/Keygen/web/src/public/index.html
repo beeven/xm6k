@@ -52,12 +52,17 @@
           <div class="download-link">
               <div><a class="btn btn-default btn-download"><i class="fa fa-archive fa-fw"></i>手工补丁包+注册方法</a>
               </div>
-              <div class="input-group">
-                  <input type="email" class="form-control" placeholder="Enter email">
+              <div>
+                <form id="sendmail-form" action="sendmail.html">
+                  <div class="input-group">
+                  <input id="mailaddr" name="mailaddr" type="email" class="form-control" placeholder="Enter email">
                   <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">发送到邮箱</button>
+                      <button class="btn btn-default" type="submit">发送到邮箱</button>
                   </span>
               </div>
+                </form>
+              </div>
+              
           </div>
 
       </div>
