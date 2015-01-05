@@ -1,11 +1,9 @@
 var MongoClient = require("mongodb").MongoClient;
 var Q = require('q');
 
-var config = require("./config").configuration;
-
 exports.log = function(data){
     var deferred = Q.defer();
-    MongoClient.connect(config.connecitonString,{native_parser:true}, function(err,db){
+    MongoClient.connect("mongodb://localhost:27017/xm6k", function(err,db){
         if(err) {
             deferred.reject(err);
             return;
@@ -36,7 +34,12 @@ exports.checkBlacklist = function(postData){
         }
     }
 
-    MongoClient.connect(config.connecitonString,{native_parser:true},function(err,db){
+    MongoClient.connect("mongodb://localhost:27017/xm6k",function(err,db){
+        if(err) {
+            console.error(err);
+            deferred.reject(err);
+            return;
+        }
         db.collection("blacklist").findOne({"processorID":processorID},function(err,result){
             if(err){ deferred.reject(err);db.close();return;}
             console.log("check result from db:",result);

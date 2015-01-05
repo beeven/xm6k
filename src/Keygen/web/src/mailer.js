@@ -29,6 +29,7 @@ var sendMail = function(addr, content){
                 path: __dirname + "/public/attachments/org.xmind.meggy_3.5.1.201411201906.jar"
             }
         ],
+        debug: true
     };
 
     transporter.sendMail(mailOptions,function(err,info){
@@ -44,14 +45,12 @@ var sendMail = function(addr, content){
 
 var sendSerial = function(addr) {
     var serial = licGen.generateLicense(addr);
-    console.log(serial);
 
     var content = "<p><b>"+serial.replace(/\n/g,"<br/>")+"</b></p>"
                 + "<p>先不要打开XMind，两个文件不用解压缩，放到XMind的安装目录的Plugins目录下面替换。<br/>"
                     + "一般是C:\\Program Files(x86)\\XMind\\plugins<br/><br/>"
                     + "Mac的话，是用Finder找到XMind，右键，显示包内容，放到Contents/Resources/plugins下面。</p>"
                     + "<p>然后打开XMind，帮助、序列号、输入序列号按钮，填入你的邮箱和这个序列号(粗体部分，包含---BEGIN和 END---)</p>";
-    console.log(content)
     return sendMail(addr,content);
 };
 

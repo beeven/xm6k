@@ -3,7 +3,8 @@ var express = require("express"),
     bodyParser = require("body-parser");
 
 var generator = require("./generator"),
-    dataProvider = require("./dataProvider");
+    dataProvider = require("./dataProvider"),
+    mailer = require("./mailer");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true}));
@@ -17,11 +18,9 @@ app.post("/log/:email",function(req,res){
         info: req.body,
         ip: req.headers['x-real-ip'] || req.ip
     };
-    console.log(data);
 
     dataProvider.log(data);
     dataProvider.checkBlacklist(data).then(function(result){
-        console.log("check result: ",result);
         if(result) {
             res.json({
                 License: generator.generateLicense(email)
@@ -34,10 +33,16 @@ app.post("/log/:email",function(req,res){
 });
 
 app.post("/sendmail",function(req,res){
-    console.log(req.body);
     var email = req.param('mailaddr');
-    console.log(email);
-    res.send("Mail sent");
+    mailer.sendSerial(email)
+        .then(function(){
+            res.send("Mail sent");
+        })
+        .fail(function(err){
+            res.status(500).send(err);
+            console.log(err);
+        });
+
 });
 
 app.get("/",function(req,res){
