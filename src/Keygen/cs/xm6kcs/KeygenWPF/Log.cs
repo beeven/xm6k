@@ -44,9 +44,9 @@ namespace KeygenWPF
                         if (ex.Status == WebExceptionStatus.ProtocolError)
                         {
                             if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.Forbidden)
-                                throw new MaximumUsageException("已超出最大使用次数",ex);
+                                throw new MaximumUsageException("已超出最大使用次数, 请发邮件到 35239520@qq.com 说明情况",ex);
                         }
-                        throw new ConnectionExeption("无法连接到服务器",ex);
+                        throw new ConnectionExeption("无法连接到计算服务器, 请确保网络畅通",ex);
                     }
                     
                 }

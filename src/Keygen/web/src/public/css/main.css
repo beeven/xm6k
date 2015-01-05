@@ -1,0 +1,120 @@
+.main-program {
+    display: -webkit-flex;
+    display: flex;
+    border: 1px #dddddd solid;
+    border-radius: 4px;
+    margin-top: 20px;
+    width: 370px;
+    padding-left: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.main-program .logo {
+    width: 180px;
+    height: 86px;
+    -webkit-flex: none;
+    flex:none;
+}
+
+.main-program .download-link {
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+.main-program .logo .logo-text {
+    position: absolute;
+    display: block;
+    color: #bbbbbb;
+    font-size: 4em;
+    top:40px;
+    left:80px;
+    z-index: -5;
+}
+
+.download-link .btn-download {
+    width: 150px;
+    margin-top: 5px;
+}
+
+.keygen {
+    border: 1px #dddddd solid;
+    border-radius: 4px;
+    margin-top: 20px;
+    width: 370px;
+    padding-left: 15px;
+    display: -webkit-flex;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-program .download-link,
+.keygen .download-link,
+.manual .download-link {
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+.keygen .logo {
+    width: 180px;
+    height: 86px;
+    font-size: 2em;
+    -webkit-flex: none;
+    flex:none;
+    text-align: center;
+    padding-top: 15px;
+    color: #0f5a80;
+}
+
+.keygen .logo .logo-text {
+    position: absolute;
+    display: block;
+    color: #bbbbbb;
+    font-size: 3em;
+    top:-50px;
+    right:-80px;
+    z-index: -5;
+}
+
+.manual {
+    border: 1px #dddddd solid;
+    border-radius: 4px;
+    margin-top: 20px;
+    width: 370px;
+    padding-left: 15px;
+    display: -webkit-flex;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+.manual .logo {
+    width: 140px;
+    height: 86px;
+    font-size: 2em;
+    -webkit-flex: none;
+    flex:none;
+    text-align: center;
+    padding-top: 15px;
+    color: #8ba224;
+}
+
+.manual .btn-download {
+    width: 200px;
+}
+
+.manual .download-link .input-group {
+    margin-top:5px;
+    width: 200px;
+}
+
+.manual .logo .logo-text {
+    position: absolute;
+    display: block;
+    color: #bbbbbb;
+    font-size: 2em;
+    top:-20px;
+    left:10px;
+    z-index: -5;
+}
