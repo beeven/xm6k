@@ -31,7 +31,7 @@
         <Label Content="Email:" Grid.Row="0" Grid.Column="2" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
         <TextBox Name="tbInput" Grid.Row="0" Grid.Column="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" TextWrapping="Wrap" Text="hello@haha.com"/>
         <Button Content="1.Patch" Grid.Column="4" Click="PatchButton_Click" Background="#FFECE8E8"></Button>
-        <Button Content="2.Generate" Grid.Column="5" Click="GenerateButton_Click" Background="#FFECE8E8" ></Button>
+        <Button Name="btnGenerate" Content="2.Generate" Grid.Column="5" Click="GenerateButton_Click" Background="#FFECE8E8" ></Button>
         <TextBox Grid.Row="1" Grid.ColumnSpan="6" Name="tbOutput" TextWrapping="Wrap" IsReadOnly="True" Margin="5 5 5 5" FontSize="14" ></TextBox>
         
     </Grid>

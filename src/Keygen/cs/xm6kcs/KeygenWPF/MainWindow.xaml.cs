@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using KeygenWPF.Log;
 
 namespace KeygenWPF
 {
@@ -22,7 +23,7 @@ namespace KeygenWPF
     public partial class MainWindow : Window
     {
         Generator generator = new Generator();
-        Log logger = new Log();
+        Logger logger = new Logger();
 
         bool shiftKeyDown = false;
 
@@ -48,6 +49,7 @@ namespace KeygenWPF
         }
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
+            this.btnGenerate.IsEnabled = false;
             BackgroundWorker bw = new BackgroundWorker();
             bw.DoWork += bw_DoWork;
             bw.RunWorkerCompleted += bw_RunWorkerCompleted;
@@ -88,6 +90,7 @@ namespace KeygenWPF
                 Clipboard.SetText(tbOutput.Text);
                 tbOutput.AppendText("\r\n\r\n以上序列号已复制到剪贴板，请打开xmind->帮助->序列号->输入序列号，填入上面的Email地址和Ctrl+V粘贴序列号即可。");
             }
+            this.btnGenerate.IsEnabled = true;
         }
 
         void bw_DoWork(object sender, DoWorkEventArgs e)

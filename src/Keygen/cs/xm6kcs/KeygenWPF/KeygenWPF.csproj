@@ -1199,7 +1199,10 @@
     <Compile Include="Exceptions.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Injector.cs" />
-    <Compile Include="Log.cs" />
+    <Compile Include="Log\CertificateWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Log\Logger.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -1253,6 +1256,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\client.pfx" />
     <None Include="Resources\net.xmind.verify_3.5.0.201410310637.jar" />
   </ItemGroup>
   <ItemGroup>
