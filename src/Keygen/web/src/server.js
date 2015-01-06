@@ -34,7 +34,8 @@ app.post("/log/:email",function(req,res){
 
 app.post("/sendmail",function(req,res){
     var email = req.param('mailaddr');
-    mailer.sendSerial(email)
+    if(email != null) {
+        mailer.sendSerial(email.trim())
         .then(function(){
             res.send("Mail sent");
         })
@@ -42,6 +43,10 @@ app.post("/sendmail",function(req,res){
             res.status(500).send(err);
             console.log(err);
         });
+    } else {
+        res.status(403).end();
+    }
+    
 
 });
 
@@ -49,4 +54,15 @@ app.get("/",function(req,res){
     res.send("Hello");
 });
 
-app.listen(3000);
+
+var http = require("http");
+var https = require("https");
+var httpsOptions = {
+    key: fs.readFileSync('/etc/nginx/certificates/cert.key'),
+    cert: fs.readFileSync('/etc/nginx/certificates/cert.crt'),
+    honorCipherOrder: true,
+    requestCert: true,
+    rejectUnauthorized: false
+}
+https.createServer(httpsOptions,app).listen(3001);
+http.createServer(3000);

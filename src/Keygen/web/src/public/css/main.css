@@ -1,3 +1,27 @@
+html,body {
+    min-width: 420px;
+    height: 100%;
+}
+
+.container {
+    display: -webkit-flex;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.row {
+    flex: none;
+    max-width: 400px;
+}
+
+.fa-spin {
+    animation-duration: 6s;
+    -webkit-animation-duration: 6s;
+}
+
 .main-program {
     display: -webkit-flex;
     display: flex;
@@ -64,7 +88,7 @@
     flex:none;
     text-align: center;
     padding-top: 15px;
-    color: #0f5a80;
+    color: #000000;
 }
 
 .keygen .logo .logo-text {
@@ -90,23 +114,23 @@
 }
 
 .manual .logo {
-    width: 140px;
+    width: 100px;
     height: 86px;
     font-size: 2em;
     -webkit-flex: none;
     flex:none;
     text-align: center;
     padding-top: 15px;
-    color: #8ba224;
+    color: #000000;
 }
 
 .manual .btn-download {
-    width: 200px;
+    width: 240px;
 }
 
 .manual .download-link .input-group {
     margin-top:5px;
-    width: 200px;
+    width: 240px;
 }
 
 .manual .logo .logo-text {
