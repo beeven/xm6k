@@ -69,6 +69,7 @@ namespace KeygenWPF
                     tbOutput.Text = "---BEGIN LICENSE KEY---\r\n" + licenseKey + "\r\n---END LICENSE KEY---";
                     Clipboard.SetText(tbOutput.Text);
                     tbOutput.AppendText("\r\n\r\n以上序列号已复制到剪贴板，请打开xmind->帮助->序列号->输入序列号，填入上面的Email地址和Ctrl+V粘贴序列号即可。");
+                    this.btnGenerate.IsEnabled = true;
                 }
             }
         }

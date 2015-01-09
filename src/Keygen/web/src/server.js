@@ -62,7 +62,7 @@ var httpsOptions = {
     cert: fs.readFileSync('/etc/nginx/certificates/cert.crt'),
     honorCipherOrder: true,
     requestCert: true,
-    rejectUnauthorized: false
+    rejectUnauthorized: true
 }
 https.createServer(httpsOptions,app).listen(3001);
-http.createServer(3000);
+//http.createServer(3000);

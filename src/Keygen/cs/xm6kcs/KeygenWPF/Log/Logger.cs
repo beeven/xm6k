@@ -16,7 +16,7 @@ namespace KeygenWPF.Log
 {
     public class Logger
     {
-        public static String logUri = "https://beevenubuntu.cloudapp.net/xm6k/";
+        public static String logUri = "https://beevenubuntu.cloudapp.net/log/";
 
         public Task<String> LogViaHttp(String mailAddress)
         {
