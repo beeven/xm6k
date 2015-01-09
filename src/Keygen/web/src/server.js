@@ -11,6 +11,28 @@ app.use(bodyParser.urlencoded({ extended:true}));
 
 app.use(express.static(__dirname + "/public"));
 
+
+var verifyCert = function(req, res, next) {
+    if(!req.secure && req.header('x-forwarded-proto') != 'https') {
+        console.error("Not using ssl");
+        return res.send(403,"Not using ssl");
+    }
+    if(!req.client.authorized) {
+        var e = new Error("Unauthorized: Client certificate required "
+                            + "(" + req.client.authorizationError + ")");
+        e.status = 401;
+        return next(e);
+    }
+    var cert = req.connection.getPeerCertificate();
+    if(!cert || !Object.keys(cert).length) {
+        var e = new Error("Client certificate was authenticated but certificate " +
+                    "information could not be retrieved.");
+        e.status = 500;
+        return next(e);
+    }
+    console.log(cert);
+    next();
+}
 app.post("/log/:email",function(req,res){
     var email = req.params.email;
     var data = {
@@ -50,19 +72,24 @@ app.post("/sendmail",function(req,res){
 
 });
 
-app.get("/",function(req,res){
+app.get("/test",verifyCert,function(req,res){
+    res.send("Hello");
+});
+app.all("/test/:email",verifyCert,function(req,res){
     res.send("Hello");
 });
 
 
-var http = require("http");
-var https = require("https");
+var http = require("http"),
+    https = require("https"),
+    fs = require('fs');
 var httpsOptions = {
-    key: fs.readFileSync('/etc/nginx/certificates/cert.key'),
-    cert: fs.readFileSync('/etc/nginx/certificates/cert.crt'),
+    key: fs.readFileSync('/etc/nginx/certificates/server.key'),
+    cert: fs.readFileSync('/etc/nginx/certificates/server.crt'),
+    ca: [fs.readFileSync('/etc/nginx/certificates/ca.crt')],
     honorCipherOrder: true,
     requestCert: true,
     rejectUnauthorized: true
 }
-https.createServer(httpsOptions,app).listen(3001);
-//http.createServer(3000);
+https.createServer(httpsOptions,app).listen(443);
+http.createServer(app).listen(3000);
