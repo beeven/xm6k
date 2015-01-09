@@ -92,4 +92,4 @@ var httpsOptions = {
     rejectUnauthorized: false
 }
 https.createServer(httpsOptions,app).listen(443);
-//http.createServer(app).listen(3000);
+http.createServer(app).listen(3000);
