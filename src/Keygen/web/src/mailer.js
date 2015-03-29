@@ -6,8 +6,8 @@ var nodemailer = require("nodemailer"),
 var transporter = nodemailer.createTransport({
     service: "QQ",
     auth: {
-        user: "",
-        pass: ""
+        user: "35239520@qq.com",
+        pass: "Totoro&Henri2015"
     }
 });
 
@@ -44,13 +44,16 @@ var sendMail = function(addr, content){
 };
 
 var sendSerial = function(addr) {
-    var serial = licGen.generateLicense(addr);
+    var serial = licGen.generateLicense(addr.toLowerCase());
 
     var content = "<p><b>"+serial.replace(/\n/g,"<br/>")+"</b></p>"
                 + "<p>先不要打开XMind，两个文件不用解压缩，放到XMind的安装目录的Plugins目录下面替换。<br/>"
                     + "一般是C:\\Program Files(x86)\\XMind\\plugins<br/><br/>"
-                    + "Mac的话，是用Finder找到XMind，右键，显示包内容，放到Contents/Resources/plugins下面。</p>"
-                    + "<p>然后打开XMind，帮助、序列号、输入序列号按钮，填入你的邮箱和这个序列号(粗体部分，包含---BEGIN和 END---)</p>";
+                    + "Mac的话，是用Finder找到XMind，右键，显示包内容，放到Contents/Resources/plugins下面。<br/>"
+                    + "(如果Mac显示程序已损坏，则到系统设置-&gt;安全-&gt;只允许Mac App Store的软件运行，改成允许任何来源)</p>"
+                    + "<p>然后打开XMind，帮助、序列号、输入序列号按钮，填入你的邮箱"
+                    + " " + addr.toLowerCase() + " "
+                    + "和这个序列号(粗体部分，包含---BEGIN和 END---)</p>";
     return sendMail(addr,content);
 };
 
