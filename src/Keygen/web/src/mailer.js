@@ -7,19 +7,36 @@ var transporter = nodemailer.createTransport({
     service: "QQ",
     auth: {
         user: "35239520@qq.com",
-        pass: "Totoro&Henri2015"
+        pass: "########"
     }
 });
 
 //transporter.use("compile",markdown());
 
 
-var sendMail = function(addr, content){
+var sendMail = function(addr, content,version){
     var deferred = Q.defer();
     var mailOptions = {
         from: "Beeven Yip <35239520@qq.com>",
         to: addr,
-        subject: "XMind License",
+        subject: "XMind License for 3.5.2",
+        html: content,
+        attachments: [
+            {
+                path: __dirname + "/public/attachments/net.xmind.verify_3.5.2.201504270119.jar"
+            },
+            {
+                path: __dirname + "/public/attachments/org.xmind.meggy_3.5.2.201504270119.jar"
+            }
+        ],
+        debug: true
+    };
+    
+    if(version == "3.5.1") {
+    mailOptions = {
+        from: "Beeven Yip <35239520@qq.com>",
+        to: addr,
+        subject: "XMind License for 3.5.1",
         html: content,
         attachments: [
             {
@@ -31,6 +48,7 @@ var sendMail = function(addr, content){
         ],
         debug: true
     };
+    }
 
     transporter.sendMail(mailOptions,function(err,info){
         if(err) {
@@ -43,18 +61,20 @@ var sendMail = function(addr, content){
     return deferred.promise;
 };
 
-var sendSerial = function(addr) {
+var sendSerial = function(addr,version) {
     var serial = licGen.generateLicense(addr.toLowerCase());
 
     var content = "<p><b>"+serial.replace(/\n/g,"<br/>")+"</b></p>"
-                + "<p>先不要打开XMind，两个文件不用解压缩，放到XMind的安装目录的Plugins目录下面替换。<br/>"
-                    + "一般是C:\\Program Files(x86)\\XMind\\plugins<br/><br/>"
+                + "<p>XMind 还没安装的话，可以到百度盘共享下载 <a href=\"http://pan.baidu.com/s/1jGIMc3W\">http://pan.baidu.com/s/1jGIMc3W</a></p>"
+                + "<p>1. 分别下载邮件中的两个附件，不用解压缩</p>"
+                    + "<p>2. 关闭xmind</p>"
+                    + "<p>3. 把附件直接拖到XMind安装目录的Plugins目录下进行覆盖。（一般是C:\Program Files(x86)\XMind\plugins）<br/>"
                     + "Mac的话，是用Finder找到XMind，右键，显示包内容，放到Contents/Resources/plugins下面。<br/>"
                     + "(如果Mac显示程序已损坏，则到系统设置-&gt;安全-&gt;只允许Mac App Store的软件运行，改成允许任何来源)</p>"
-                    + "<p>然后打开XMind，帮助、序列号、输入序列号按钮，填入你的邮箱"
+                    + "<p>4.打开XMind，帮助-&gt;序列号-&gt;输入序列号按钮，填入你的邮箱"
                     + " " + addr.toLowerCase() + " "
-                    + "和这个序列号(粗体部分，包含---BEGIN和 END---)</p>";
-    return sendMail(addr,content);
+                    + "和上述序列号(粗体部分，包含---BEGIN和 END---)</p>";
+    return sendMail(addr,content,version);
 };
 
 exports.sendMail = sendMail;

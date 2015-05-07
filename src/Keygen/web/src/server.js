@@ -55,9 +55,10 @@ app.post("/log/:email",function(req,res){
 });
 
 app.post("/sendmail",function(req,res){
-    var email = req.param('mailaddr');
+    var email = req.body.mailaddr;
+    var version = req.body.version;
     if(email != null) {
-        mailer.sendSerial(email.trim())
+        mailer.sendSerial(email.trim(),version)
         .then(function(){
             res.send("Mail sent");
         })
